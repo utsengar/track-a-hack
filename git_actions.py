@@ -20,9 +20,9 @@ def pull_project(user_name, project):
 
 def call_gitstats(project_folder):
     data_collector = GitDataCollector()
-    data = data_collector.collect(project_folder)
+    data_collector.collect(project_folder)
     _rm_rf(project_folder)
-    return data
+    return data_collector
 
 
 def _rm_rf(d):
