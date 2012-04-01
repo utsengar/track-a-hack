@@ -23,8 +23,7 @@ def get_data(user_name, project):
         _rm_rf(project_dir_path)
         return data
     else:
-        return "Git repo does not exist!"
-
+        return "{None}"
 
 def pull_project(user_name, project):
     os.system('git clone https://github.com/' + user_name + '/' + project + '.git')
@@ -71,7 +70,7 @@ def construct_json(data_collector):
             d.update({each: y})
         except:
             pass
-    return json.loads(json.dumps(d, cls=GitStatsEncoder, sort_keys=True, indent=4))
+    return json.dumps(d, cls=GitStatsEncoder, sort_keys=True, indent=4)
 
 if __name__ == "__main__":
     data = get_data("utkarsh2012", "python-ebay")

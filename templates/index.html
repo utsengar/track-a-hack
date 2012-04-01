@@ -38,7 +38,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="#about">About</a></li>
+              <li><a data-toggle="modal" href="#about" >About</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -49,13 +49,51 @@
 
       <h1>Track Your Hackathon</h1>
       <p>Hackathon Driven Development. Made Simple.<br></p>
-
+      <input id="load-stats" type="button" value="get my stats!">
+      <div id="ajax-panel"> </div>
     </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="../static/js/bootstrap-modal.js"></script>
+
+
+             <!-- sample modal content -->
+          <div id="about" class="modal hide fade">
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal" >&times;</a>
+              <h3>About Track-A-Hack!</h3>
+            </div>
+            <div class="modal-body">
+                Hackathon project by @utkarsh2012, @roopeshv and @dhaval2025
+
+            </div>
+            <div class="modal-footer">
+                Open Source (Apache 2.0): <a href="https://github.com/utkarsh2012/track-a-hack">Track-A-Hack on Github</a>
+            </div>
+          </div>
+
+        <script type="text/javascript">
+        $('#load-stats').click(function(){
+          $.ajax({
+             type: 'POST',
+             url: 'http://localhost:5000/stats',
+             data: { username: 'utkarsh2012', project: 'python-ebay' },
+             beforeSend:function(){
+                            $('#ajax-panel').html('<div class="loading"><img src="static/images/loading.gif" alt="Processing..." /></div>');
+             },
+             success:function(data){
+                            $('#ajax-panel').empty();
+                            alert(data);
+                          },
+            error:function(){
+                             $('#ajax-panel').html('<p class="error"><strong>Oops!</strong> Try that again in a few moments.</p>');
+                          }
+                   });
+          });
+      </script> 
   </body>
 </html>
 
