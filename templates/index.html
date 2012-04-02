@@ -25,6 +25,19 @@
   </head>
 
   <body>
+    <div id="about" class="modal hide fade">
+        <div class="modal-header">
+              <a class="close" data-dismiss="modal" >&times;</a>
+              <h3>About Track-A-Hack!</h3>
+        </div>
+        <div class="modal-body">
+                Hackathon project by @utkarsh2012, @roopeshv and @dhaval2025
+
+        </div>
+        <div class="modal-footer">
+                Open Source (Apache 2.0): <a href="https://github.com/utkarsh2012/track-a-hack">Track-A-Hack on Github</a>
+        </div>
+    </div>
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -49,51 +62,42 @@
 
       <h1>Track Your Hackathon</h1>
       <p>Hackathon Driven Development. Made Simple.<br></p>
-      <input id="load-stats" type="button" value="get my stats!">
-      <div id="ajax-panel"> </div>
+      <div id="ajax-panel"> <input id="load-stats" type="button" value="get my stats!"> </div>
+      <div id="general"> </div>
+      <div id="activity"> </div>
     </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script src="../static/js/handlebars-1.0.0.beta.6.js"></script>
     <script src="../static/js/bootstrap-modal.js"></script>
+    <script src="../static/js/logic.js"></script>
 
-
-             <!-- sample modal content -->
-          <div id="about" class="modal hide fade">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal" >&times;</a>
-              <h3>About Track-A-Hack!</h3>
-            </div>
-            <div class="modal-body">
-                Hackathon project by @utkarsh2012, @roopeshv and @dhaval2025
-
-            </div>
-            <div class="modal-footer">
-                Open Source (Apache 2.0): <a href="https://github.com/utkarsh2012/track-a-hack">Track-A-Hack on Github</a>
-            </div>
-          </div>
-
-        <script type="text/javascript">
+    <script type="text/javascript">
         $('#load-stats').click(function(){
           $.ajax({
              type: 'POST',
              url: 'http://localhost:5000/stats',
-             data: { username: 'utkarsh2012', project: 'python-ebay' },
+             data: { username: 'roopeshvaddepally', project: 'bayareahash' },
              beforeSend:function(){
-                            $('#ajax-panel').html('<div class="loading"><img src="static/images/loading.gif" alt="Processing..." /></div>');
+                                $('#ajax-panel').html('<div class="loading">Processing...</div>');
              },
              success:function(data){
-                            $('#ajax-panel').empty();
-                            alert(data);
-                          },
+                                data = $.parseJSON(data)
+                                $('#ajax-panel').empty();
+                                constructHTML(data);
+                            },
+
             error:function(){
-                             $('#ajax-panel').html('<p class="error"><strong>Oops!</strong> Try that again in a few moments.</p>');
+                                $('#ajax-panel').html('<p class="error"><strong>Oops!</strong> Try that again in a few moments.</p>');
                           }
                    });
           });
-      </script> 
+      </script>
+
   </body>
 </html>
 
