@@ -12,10 +12,13 @@ def get_stats():
     if request.method == 'POST':
         username = request.form['username']
         project = request.form['project']
+        if username==None or project==None or username=="" or project=="":
+            return "None"
+
         data = get_data(username, project)
 
     if data == "{None}":
-        return "Invalid input!"
+        return "None"
 
     return construct_json(data)
 

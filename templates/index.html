@@ -96,9 +96,14 @@
                                 $('#ajax-panel').html('<div class="loading">Processing...</div>');
              },
              success:function(data){
-                                data = $.parseJSON(data)
-                                $('#ajax-panel').empty();
-                                constructHTML(data);
+                                if(data=="None"){
+                                    $('#ajax-panel').empty();
+                                    $('#ajax-panel').html('<div class="alert alert-error">Oops! You entered invalid username or project name!, Try again!</div>');
+                                }else{
+                                    data = $.parseJSON(data)
+                                    $('#ajax-panel').empty();
+                                    constructHTML(data);
+                                }
                             },
 
             error:function(){
