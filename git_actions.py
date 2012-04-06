@@ -4,6 +4,7 @@ import json
 from pprint import pprint
 from lib.gitstats import GitDataCollector
 
+path_to_clone = "/tmp/"
 
 class GitStatsEncoder(json.JSONEncoder):
     """Encoder for dealing with some attributes in git data collector object."""
@@ -26,6 +27,7 @@ def get_data(user_name, project):
         return "{None}"
 
 def pull_project(user_name, project):
+    os.chdir(path_to_clone);
     os.system('git clone https://github.com/' + user_name + '/' + project + '.git')
     project_dir = os.getcwd() + '/' + project
     return project_dir
