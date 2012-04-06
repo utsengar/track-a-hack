@@ -59,10 +59,17 @@
     </div>
 
     <div class="container">
+        <form class="well form-inline" id="git_form" onsubmit="return submitForm();">  
+            <input type="text" class="input-small" name="username" placeholder="utkarsh2012">
+            <input type="text" class="input-small" name="project" placeholder="bayareahashed">  
+            <button type="submit" name="submit" class="btn">Git my stats!</button>  
+        </form> 
 
-      <h1>Track Your Hackathon</h1>
-      <p>Hackathon Driven Development. Made Simple.<br></p>
-      <div id="ajax-panel"> <input id="load-stats" type="button" value="get my stats!"> </div>
+        <div id="ajax-panel">
+            <h1>Track Your Hackathon</h1>
+            <p>Hackathon Driven Development. Made Simple.<br></p>
+            <input id="load-stats" type="button" value="get my stats!"> 
+        </div>
       <div id="general"> </div>
       <div id="activity"> </div>
     </div> <!-- /container -->
@@ -72,17 +79,21 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script src="http://toolserver.org/~dartar/js/dygraph-combined.js"></script>
     <script src="../static/js/handlebars-1.0.0.beta.6.js"></script>
     <script src="../static/js/bootstrap-modal.js"></script>
     <script src="../static/js/logic.js"></script>
 
     <script type="text/javascript">
-        $('#load-stats').click(function(){
+        function submitForm(){
           $.ajax({
              type: 'POST',
              url: 'http://localhost:5000/stats',
-             data: { username: 'roopeshvaddepally', project: 'bayareahash' },
+             data: $('#git_form').serialize(),
              beforeSend:function(){
+                                $('#ajax-panel').empty();
+                                $('#general').empty();
+                                $('#activity').empty();
                                 $('#ajax-panel').html('<div class="loading">Processing...</div>');
              },
              success:function(data){
@@ -94,8 +105,9 @@
             error:function(){
                                 $('#ajax-panel').html('<p class="error"><strong>Oops!</strong> Try that again in a few moments.</p>');
                           }
-                   });
-          });
+            });
+            return false;  
+          }
       </script>
 
   </body>

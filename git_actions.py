@@ -20,7 +20,7 @@ def get_data(user_name, project):
 
     if os.path.exists(project_dir_path):
         data = call_gitstats(project_dir_path)
-        _rm_rf(project_dir_path)
+        #_rm_rf(project_dir_path)
         return data
     else:
         return "{None}"
