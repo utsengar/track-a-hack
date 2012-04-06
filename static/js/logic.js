@@ -5,7 +5,6 @@ function constructHTML(data){
 
 
 function setGeneralInfo(data){
-    //Construct JSON
     general_data = {
         projectname: data.projectname,
         total_authors: data.total_authors,
