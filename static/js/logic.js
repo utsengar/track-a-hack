@@ -61,8 +61,8 @@ function setAuthors(data){
         author_commit_count.push(data.authors[k].commits);
     }
 
-    $('#author_list').html('<div class="well">'+ String(author_list) +'</div>"');
-    setHorizontalBarChart("author_commit_count", "Author commit count", author_commit_count, author_list);
+    $('#author_list').html('<div class="well"> Authors</b> </br>'+ String(author_list) +'</div>');
+    setHorizontalBarChart("author_commit_count", "Commit Count By Author", author_commit_count, author_list);
 }
 
 function setAuthorOfTheYear(data){
@@ -163,7 +163,7 @@ function setHorizontalBarChart(div, title, horizontal, vertical){
     },
     txtattr = { font: "12px sans-serif" };
     r.text(100, 10, title).attr(txtattr);
-    r.hbarchart(10, 10, 300, 220, [horizontal], {stacked: true}).hover(fin, fout).label([vertical], true);
+    r.hbarchart(10, 10, 300, 120, [horizontal], {stacked: true}).hover(fin, fout).label([vertical], true);
 }
 
 
@@ -193,7 +193,7 @@ function setVericalBarChart(div, title, horizontal, vertical){
     },
     txtattr = { font: "12px sans-serif" };
     r.text(100, 10, title).attr(txtattr);
-    r.barchart(10, 10, 300, 220, [vertical]).hover(fin, fout).label([horizontal], true);
+    r.barchart(10, 10, 200, 220, [vertical]).hover(fin, fout).label([horizontal], true);
 }
 
 function setHtml(source, div, jsonData){
