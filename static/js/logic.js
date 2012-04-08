@@ -54,23 +54,30 @@ function setFileGraphs(data){
 
 function setAuthors(data){
     author_list = [];
+    author_commit_count = [];
     for(k in data.authors){
-        author_list.push(k);
+        var first_name = k.split(" ")[0];
+        author_list.push(first_name);
+        author_commit_count.push(data.authors[k].commits);
     }
 
     $('#author_list').html('<div class="well">'+ String(author_list) +'</div>"');
-
+    setHorizontalBarChart("author_commit_count", "Author commit count", author_commit_count, author_list);
 }
 
 function setAuthorOfTheYear(data){
     authors=[];
     count=[]
     for(k in data.author_of_year){
-        authors.push(k);
-        count.push(data.author_of_year[k]);
+        var values = data.author_of_year[k];
+        for(a in values){
+            var first_name = a.split(" ")[0];
+            authors.push(first_name);
+            count.push(values[a]);
+        }
     }
 
-    setBarChart("author_of_the_year", count, authors);
+    setVericalBarChart("author_of_the_year", "Author of the Year", authors, count);
 }
 
 /*
@@ -106,6 +113,9 @@ function setPieChart(div, data, legend){
     var width = $("#"+div).width();
 
     var r = Raphael(div);
+    //txtattr = { font: "12px sans-serif" };
+    //r.text(480, 10, "").attr(txtattr);
+
     pie = r.piechart(width/3, 342/2, 100, data,
                      { legend: legend, 
                          legendpos: "east"});
@@ -130,9 +140,9 @@ function setPieChart(div, data, legend){
 
 
 /*
- * Construct bar chart: reusable method
+ * Construct horizontal bar chart: reusable method
  */
-function setBarChart(div, vertical, horizontal){
+function setHorizontalBarChart(div, title, horizontal, vertical){
     var r = Raphael(div),
     fin = function () {
         this.flag = r.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
@@ -152,16 +162,38 @@ function setBarChart(div, vertical, horizontal){
         this.flag.animate({opacity: 0}, 300, function () {this.remove();});
     },
     txtattr = { font: "12px sans-serif" };
+    r.text(100, 10, title).attr(txtattr);
+    r.hbarchart(10, 10, 300, 220, [horizontal], {stacked: true}).hover(fin, fout).label([vertical], true);
+}
 
-    r.text(160, 10, "Single Series Chart").attr(txtattr);
-    r.text(480, 10, "Multiline Series Stacked Chart").attr(txtattr);
-    r.text(160, 250, "Multiple Series Chart").attr(txtattr);
-    r.text(480, 250, "Multiline Series Stacked Chart\nColumn Hover").attr(txtattr);
 
-    r.barchart(10, 10, 300, 220, [[55, 20, 13, 32, 5, 1, 2, 10]]).hover(fin, fout);
-    r.hbarchart(330, 10, 300, 220, [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]], {stacked: true}).hover(fin, fout);
-    r.hbarchart(10, 250, 300, 220, [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]]).hover(fin, fout);
-    var c = r.barchart(330, 250, 300, 220, [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]], {stacked: true, type: "soft"}).hoverColumn(fin2, fout2);
+
+/*
+ * Construct vertical bar chart: reusable method
+ */
+function setVericalBarChart(div, title, horizontal, vertical){
+    var position = $("#"+div).position();
+    var r = Raphael(div),
+    fin = function () {
+        this.flag = r.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
+    },
+    fout = function () {
+        this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+    },
+    fin2 = function () {
+        var y = [], res = [];
+        for (var i = this.bars.length; i--;) {
+            y.push(this.bars[i].y);
+            res.push(this.bars[i].value || "0");
+        }
+        this.flag = r.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).insertBefore(this);
+    },
+    fout2 = function () {
+        this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+    },
+    txtattr = { font: "12px sans-serif" };
+    r.text(100, 10, title).attr(txtattr);
+    r.barchart(10, 10, 300, 220, [vertical]).hover(fin, fout).label([horizontal], true);
 }
 
 function setHtml(source, div, jsonData){
