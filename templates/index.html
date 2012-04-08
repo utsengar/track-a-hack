@@ -59,29 +59,47 @@
     </div>
 
     <div class="container">
-        <form class="well form-inline" id="git_form" onsubmit="return submitForm();">  
-            <input type="text" class="input-small" name="username" placeholder="utkarsh2012">
-            <input type="text" class="input-small" name="project" placeholder="bayareahashed">  
-            <button type="submit" name="submit" class="btn">Git my stats!</button>  
-        </form> 
-
-        <div id="ajax-panel">
-            <h1>Track Your Hackathon</h1>
-            <p>Hackathon Driven Development. Made Simple.<br></p>
+        <div class="row">
+             <div id="general" class="span12"></div>
+             <div id="activity_by_hour_of_day" class="span4"></div>
+             <div id="file_extensions" class="span4"></div>
+             <div id="author_list" class="span4"></div>
+             <div id="author_of_the_year" class="span12"></div>
         </div>
-      <div id="general"> </div>
-      <div id="activity"> </div>
-    </div> <!-- /container -->
 
+        <div class="row">
+            <div class="span12" style="padding-top:15%; text-align: center;">
+            
+            <div id="ajax-panel">
+                <h1>Track Your Hackathon</h1>
+                <p>Hackathon Driven Development. Made Simple.<br></p>
+                <br />
+                <form class="well form-inline" id="git_form" onsubmit="return submitForm();">  
+                    <input type="text" class="input-small" name="username" placeholder="utkarsh2012" value="roopeshvaddepally">
+                    <input type="text" class="input-small" name="project" placeholder="python-ebay", value="bayareahash">  
+                    <button type="submit" name="submit" class="btn">Git my stats!</button>  
+                </form>
+            </div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+    <div id="holder"></div>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
-    <script src="http://toolserver.org/~dartar/js/dygraph-combined.js"></script>
+    <script src="../static/js/raphael-min.js"></script>
+    <script src="../static/js/g.raphael-min.js"></script>
+    <script src="../static/js/g.pie-min.js"></script>
+    <script src="../static/js/g.line-min.js"></script>
+    <script src="../static/js/g.bar-min.js"></script>
+    <script src="../static/js/g.dot-min.js"></script>
+
     <script src="../static/js/handlebars-1.0.0.beta.6.js"></script>
     <script src="../static/js/bootstrap-modal.js"></script>
     <script src="../static/js/logic.js"></script>
+
 
     <script type="text/javascript">
         function submitForm(){
